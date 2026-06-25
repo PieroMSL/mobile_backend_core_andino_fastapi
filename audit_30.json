@@ -1,0 +1,242 @@
+[
+  {
+    "caso": 1,
+    "cliente": "Casandra Flores",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 2,
+    "cliente": "Cleopatra Soto",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 3,
+    "cliente": "Demostenes Rojas",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 4,
+    "cliente": "Hipatia Condori",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "media",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 5,
+    "cliente": "Anibal Vargas",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 6,
+    "cliente": "Penelope Apaza",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 7,
+    "cliente": "Esquilo Ramos",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "normal",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 8,
+    "cliente": "Ariadna Quispe",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "media",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 9,
+    "cliente": "Heraclito Ccahua",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 10,
+    "cliente": "Anaximandro Quispe",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "normal",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 11,
+    "cliente": "Eulalia Mamani",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "media",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 12,
+    "cliente": "Teofilo Huaman",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "media",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 13,
+    "cliente": "Sofocles Huanca",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "media",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 14,
+    "cliente": "Casiopea Torres",
+    "buro_db": "DEFICIENTE",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "media",
+    "ficha_sbs": "DEFICIENTE"
+  },
+  {
+    "caso": 15,
+    "cliente": "Aristofanes Cruz",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 16,
+    "cliente": "Calipso Mendoza",
+    "buro_db": "CPP",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "media",
+    "ficha_sbs": "CPP"
+  },
+  {
+    "caso": 17,
+    "cliente": "Demetrio Quispe",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 18,
+    "cliente": "Antigona Flores",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 19,
+    "cliente": "Pitagoras Rojas",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 20,
+    "cliente": "Berenice Apaza",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 21,
+    "cliente": "Anaxagoras Huaman",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 22,
+    "cliente": "Climene Vargas",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 23,
+    "cliente": "Epaminondas Soto",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "normal",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 24,
+    "cliente": "Lisistrata Ramos",
+    "buro_db": "NORMAL",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "media",
+    "ficha_sbs": "NORMAL"
+  },
+  {
+    "caso": 25,
+    "cliente": "Filoctetes Cruz",
+    "buro_db": "CPP",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "media",
+    "ficha_sbs": "CPP"
+  },
+  {
+    "caso": 26,
+    "cliente": "Calirroe Mendoza",
+    "buro_db": "CPP",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "media",
+    "ficha_sbs": "CPP"
+  },
+  {
+    "caso": 27,
+    "cliente": "Tucidides Quispe",
+    "buro_db": "CPP",
+    "comite_db": "desembolsado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "CPP"
+  },
+  {
+    "caso": 28,
+    "cliente": "Aquiles Mamani",
+    "buro_db": "PERDIDA",
+    "comite_db": "rechazado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "RECHAZADO"
+  },
+  {
+    "caso": 29,
+    "cliente": "Medea Apaza",
+    "buro_db": "DUDOSO",
+    "comite_db": "rechazado",
+    "cartera_prioridad": "media",
+    "ficha_sbs": "RECHAZADO"
+  },
+  {
+    "caso": 30,
+    "cliente": "Esquines Rojas",
+    "buro_db": "DUDOSO",
+    "comite_db": "rechazado",
+    "cartera_prioridad": "alta",
+    "ficha_sbs": "RECHAZADO"
+  }
+]
