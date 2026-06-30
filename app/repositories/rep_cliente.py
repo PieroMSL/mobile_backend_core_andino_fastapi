@@ -29,10 +29,28 @@ def creditos(db: Session, cliente_id: str) -> list[CrCredito]:
     ).order_by(CrCredito.fecha_desembolso.desc().nullslast()).all()
 
 
+def credito_pertenece(
+    db: Session, cliente_id: str, cod_cuenta_credito: str
+) -> bool:
+    return db.query(CrCredito.id).filter(
+        CrCredito.cliente_id == cliente_id,
+        CrCredito.cod_cuenta_credito == cod_cuenta_credito,
+    ).first() is not None
+
+
 def cronograma(db: Session, cod_cuenta_credito: str) -> list[CrCronogramaPago]:
     return db.query(CrCronogramaPago).filter(
         CrCronogramaPago.cod_cuenta_credito == cod_cuenta_credito
     ).order_by(CrCronogramaPago.nro_cuota.asc()).all()
+
+
+def cuenta_ahorro_pertenece(
+    db: Session, cliente_id: str, cod_cuenta_ahorro: str
+) -> bool:
+    return db.query(CrCuentaAhorro.id).filter(
+        CrCuentaAhorro.cliente_id == cliente_id,
+        CrCuentaAhorro.cod_cuenta_ahorro == cod_cuenta_ahorro,
+    ).first() is not None
 
 
 def movimientos(db: Session, cliente_id: str, limit: int = 20) -> list[CrMovimiento]:

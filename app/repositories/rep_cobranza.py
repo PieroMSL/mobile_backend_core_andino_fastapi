@@ -4,7 +4,26 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 
-def listar_mora(db: Session) -> list[dict]:
+def cliente_en_cartera(
+    db: Session, asesor_id: str, cliente_id: str
+) -> bool:
+    row = db.execute(
+        text(
+            """
+            SELECT 1
+            FROM cartera_diaria
+            WHERE asesor_id = :asesor_id AND cliente_id = :cliente_id
+            LIMIT 1
+            """
+        ),
+        {"asesor_id": asesor_id, "cliente_id": cliente_id},
+    ).first()
+    return row is not None
+
+
+def listar_mora(
+    db: Session, asesor_id: str, ver_todos: bool = False
+) -> list[dict]:
     """Clientes con cuotas vencidas, ordenados por dias de mora desc (RF-75)."""
     rows = db.execute(
         text(
@@ -15,9 +34,18 @@ def listar_mora(db: Session) -> list[dict]:
             FROM cr_creditos cr
             JOIN clientes c ON c.id = cr.cliente_id
             WHERE cr.dias_mora > 0
+              AND (
+                :ver_todos OR EXISTS (
+                  SELECT 1
+                  FROM cartera_diaria cd
+                  WHERE cd.cliente_id = cr.cliente_id
+                    AND cd.asesor_id = :asesor_id
+                )
+              )
             ORDER BY cr.dias_mora DESC
             """
-        )
+        ),
+        {"ver_todos": ver_todos, "asesor_id": asesor_id},
     ).mappings().all()
     return [
         {

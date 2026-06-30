@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlalchemy import text
 from sqlalchemy.orm import Session
@@ -23,11 +23,7 @@ def productividad(
     asesor: dict = Depends(get_current_asesor),
 ):
     """Reporte de productividad mensual por asesor (M11 / RF-80)."""
-    if asesor.get("perfil") not in ("supervisor", "administrador"):
-        raise HTTPException(
-            status_code=403,
-            detail="Acceso denegado: Solo supervisores o administradores tienen acceso a este reporte.",
-        )
+    ver_todos = asesor.get("perfil") in ("supervisor", "administrador")
     rows = db.execute(
         text(
             """
@@ -39,10 +35,15 @@ def productividad(
             FROM solicitudes_credito s
             JOIN asesores a ON a.id = s.asesor_id
             WHERE date_trunc('month', s.created_at) = date_trunc('month', now())
+              AND (:ver_todos OR s.asesor_id = :asesor_id)
             GROUP BY a.nombres, a.apellidos
             ORDER BY enviadas DESC
             """
-        )
+        ),
+        {
+            "ver_todos": ver_todos,
+            "asesor_id": asesor["asesor_id"],
+        },
     ).mappings().all()
     return [
         ProductividadAsesor(

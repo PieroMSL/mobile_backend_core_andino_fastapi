@@ -11,10 +11,13 @@ router = APIRouter()
 @router.get("", response_model=list[CarteraItemOut])
 def listar_cartera(
     fecha: date | None = None,
+    incluir_historico: bool = False,
     db: Session = Depends(get_db),
     asesor: dict = Depends(get_current_asesor),
 ):
-    """Cartera del dia del asesor autenticado (RF-04/RF-09)."""
+    """Cartera del asesor autenticado, diaria o con su ultima asignacion."""
+    if incluir_historico:
+        return rep_cartera.listar_por_asesor(db, asesor["asesor_id"], None)
     f = fecha or date.today()
     return rep_cartera.listar_por_asesor(db, asesor["asesor_id"], f)
 

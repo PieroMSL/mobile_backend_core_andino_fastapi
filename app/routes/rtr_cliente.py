@@ -74,6 +74,10 @@ def cronograma(
     db: Session = Depends(get_db),
     cli: dict = Depends(get_current_cliente),
 ):
+    if not rep_cliente.credito_pertenece(
+        db, cli["cliente_id"], cod_cuenta_credito
+    ):
+        raise HTTPException(status_code=404, detail="Credito no encontrado")
     return rep_cliente.cronograma(db, cod_cuenta_credito)
 
 
@@ -103,6 +107,10 @@ def crear_operacion(
     cli: dict = Depends(get_current_cliente),
 ):
     """Registra una operación iniciada por el cliente (transferencia / pago)."""
+    if not rep_cliente.cuenta_ahorro_pertenece(
+        db, cli["cliente_id"], data.cod_cuenta_origen
+    ):
+        raise HTTPException(status_code=403, detail="Cuenta de origen no autorizada")
     return rep_cliente.crear_operacion(db, cli["cliente_id"], data.model_dump())
 
 
@@ -114,6 +122,20 @@ def crear_solicitud_cliente(
     cli: dict = Depends(get_current_cliente),
 ):
     """Permite al cliente registrar una solicitud de crédito desde la App de Clientes (Paso 1)."""
+    cliente = rep_cliente.get_cliente(db, cli["cliente_id"])
+    if not cliente:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+
+    solicitud = data.model_dump()
+    solicitud.update(
+        {
+            "numero_documento": cliente.numero_documento,
+            "nombres": cliente.nombres,
+            "apellidos": cliente.apellidos,
+            "telefono": cliente.telefono,
+        }
+    )
+
     row = db.execute(
         text("SELECT asesor_id, agencia_id FROM cartera_diaria WHERE cliente_id = :cid LIMIT 1"),
         {"cid": cli["cliente_id"]}
@@ -144,7 +166,7 @@ def crear_solicitud_cliente(
             agencia_id = str(row_fallback[1]) if row_fallback[1] else None
 
     res = rep_solicitudes.crear(
-        db, asesor_id, agencia_id, data.model_dump(), canal="cliente"
+        db, asesor_id, agencia_id, solicitud, canal="cliente"
     )
     background_tasks.add_task(svc_promocion.promover, db)
     return res

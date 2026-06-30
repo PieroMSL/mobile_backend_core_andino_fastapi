@@ -4,17 +4,31 @@ from sqlalchemy import desc
 from app.models.mdl_cartera import CarteraDiaria
 from app.models.mdl_clientes import Cliente
 
-def listar_por_asesor(db: Session, asesor_id: str, fecha: date) -> list[dict]:
-    filas = (
+def listar_por_asesor(
+    db: Session, asesor_id: str, fecha: date | None
+) -> list[dict]:
+    query = (
         db.query(CarteraDiaria, Cliente)
         .join(Cliente, Cliente.id == CarteraDiaria.cliente_id)
-        .filter(
-            CarteraDiaria.asesor_id == asesor_id,
-            CarteraDiaria.fecha_asignacion == fecha,
-        )
-        .order_by(desc(CarteraDiaria.score_prioridad))
-        .all()
+        .filter(CarteraDiaria.asesor_id == asesor_id)
     )
+    if fecha is not None:
+        query = query.filter(CarteraDiaria.fecha_asignacion == fecha)
+        filas = query.order_by(desc(CarteraDiaria.score_prioridad)).all()
+    else:
+        filas_historicas = query.order_by(
+            desc(CarteraDiaria.fecha_asignacion),
+            desc(CarteraDiaria.score_prioridad),
+        ).all()
+        filas = []
+        clientes_vistos = set()
+        for cartera, cliente in filas_historicas:
+            cliente_id = str(cartera.cliente_id)
+            if cliente_id in clientes_vistos:
+                continue
+            clientes_vistos.add(cliente_id)
+            filas.append((cartera, cliente))
+
     return [
         {
             "id": str(c.id),
