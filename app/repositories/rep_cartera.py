@@ -1,6 +1,6 @@
 from datetime import datetime, timezone, date
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
+from sqlalchemy import desc, text
 from app.models.mdl_cartera import CarteraDiaria
 from app.models.mdl_clientes import Cliente
 
@@ -29,8 +29,17 @@ def listar_por_asesor(
             clientes_vistos.add(cliente_id)
             filas.append((cartera, cliente))
 
-    return [
-        {
+    res_list = []
+    for c, cli in filas:
+        monto = float(c.monto_credito or 0)
+        if c.tipo_gestion == "NUEVA_SOLICITUD" or monto == 0:
+            sol_monto = db.execute(
+                text("SELECT monto_solicitado FROM solicitudes_credito WHERE cliente_id = :cid ORDER BY created_at DESC LIMIT 1"),
+                {"cid": c.cliente_id}
+            ).scalar()
+            if sol_monto is not None:
+                monto = float(sol_monto)
+        res_list.append({
             "id": str(c.id),
             "cliente_id": str(c.cliente_id),
             "cliente_nombre": f"{cli.nombres} {cli.apellidos}",
@@ -38,14 +47,13 @@ def listar_por_asesor(
             "tipo_gestion": c.tipo_gestion,
             "prioridad": c.prioridad,
             "score_prioridad": c.score_prioridad or 0,
-            "monto_credito": float(c.monto_credito or 0),
+            "monto_credito": monto,
             "estado_visita": c.estado_visita,
             "orden_manual": c.orden_manual,
             "lat": float(cli.lat) if cli.lat is not None else None,
             "lng": float(cli.lng) if cli.lng is not None else None,
-        }
-        for c, cli in filas
-    ]
+        })
+    return res_list
 
 def marcar_visita(db: Session, asesor_id: str, cartera_id: str, data: dict) -> bool:
     fila = (

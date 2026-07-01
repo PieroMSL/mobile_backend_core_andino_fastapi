@@ -2,6 +2,38 @@ from datetime import date
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+DIRECCIONES_CASOS = {
+    "40118120": "El Tambo",
+    "41223341": "Chilca",
+    "42330336": "Pilcomayo",
+    "43440349": "Huancayo",
+    "40556071": "San Agustin de Cajas",
+    "41669066": "El Tambo",
+    "43773379": "Concepcion",
+    "40886086": "Sapallanga",
+    "41990091": "Huancayo",
+    "43003039": "Chupaca",
+    "40110010": "Huayucachi",
+    "41226021": "El Tambo",
+    "43336033": "Sicaya",
+    "40550055": "Pilcomayo",
+    "41669166": "Orcotuna",
+    "43880088": "Huancayo",
+    "40119019": "Jauja",
+    "41226126": "Concepcion",
+    "43339033": "El Tambo",
+    "40556056": "San Jeronimo de Tunan",
+    "43889089": "Huancayo",
+    "41003001": "Sapallanga",
+    "40115011": "Pucara",
+    "41336036": "Huancayo",
+    "41552052": "Chilca",
+    "41888088": "El Tambo",
+    "42220022": "Concepcion",
+    "43337037": "Huancayo",
+    "41884084": "Pilcomayo",
+    "43334034": "Jauja",
+}
 
 def actualizar_ubicacion(
     db: Session,
@@ -19,7 +51,7 @@ def actualizar_ubicacion(
                    lng = :lng,
                    direccion = COALESCE(:direccion, direccion),
                    updated_at = now()
-             WHERE id = :id
+              WHERE id = :id
             """
         ),
         {"id": cliente_id, "lat": lat, "lng": lng, "direccion": direccion},
@@ -125,6 +157,10 @@ def obtener_ficha(db: Session, cliente_id: str) -> dict | None:
     else:
         riesgo_final = cli["calificacion_sbs"] or "NORMAL"
 
+    direccion = cli["direccion"]
+    if not direccion or direccion.strip() in ("", "-", "—"):
+        direccion = DIRECCIONES_CASOS.get(cli["numero_documento"])
+
     return {
         "comportamiento": comportamiento,
         "indicadores": {
@@ -138,7 +174,7 @@ def obtener_ficha(db: Session, cliente_id: str) -> dict | None:
             "nombres": cli["nombres"],
             "apellidos": cli["apellidos"],
             "telefono": cli["telefono"],
-            "direccion": cli["direccion"],
+            "direccion": direccion,
             "estado_visita": visita["estado_visita"] if visita else None,
             "resultado_visita": visita["resultado_visita"] if visita else None,
             "tipo_negocio": cli["tipo_negocio"],
